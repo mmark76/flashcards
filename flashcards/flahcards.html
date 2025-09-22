@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PAO Flashcards (00–99)</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    body { display:flex; min-height:100vh; align-items:center; justify-content:center; background:#0b1020; color:#e8ecf1; padding:24px; }
+    .app { width: min(720px, 100%); }
+    .card { border: 1px solid #26324d; border-radius: 16px; padding: 24px; background: #121a33; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .title { margin:0 0 10px; font-weight:700; letter-spacing:0.2px; }
+    .status { font-size: 14px; opacity: 0.85; margin-bottom: 16px; }
+    .grid { display:grid; grid-template-columns: 1fr; gap: 12px; }
+    #cardBox { border: 1px dashed #324569; border-radius: 12px; padding: 24px; text-align:center; }
+    #front { font-size: 28px; margin: 0 0 12px; }
+    #back  { font-size: 20px; margin: 0; display:none; white-space: pre-line; }
+    .row { display:flex; flex-wrap:wrap; gap: 10px; align-items:center; }
+    button, label[for="file"] { cursor:pointer; border: 1px solid #2c3f66; background: #1a2750; color:#e8ecf1; padding:10px 14px; border-radius: 10px; font-size: 15px; }
+    button:hover, label[for="file"]:hover { background:#223166; }
+    input[type="text"] { background:#0f1732; color:#e8ecf1; border:1px solid #26324d; border-radius:10px; padding:10px 12px; width:100%; }
+    small.muted { color:#a8b6d9; opacity:0.8; }
+    .kvs { font-size:14px; margin-top:8px; }
+    .kvs code { background:#0f1732; padding:2px 6px; border-radius:6px; border:1px solid #26324d; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="card">
+      <h1 class="title">PAO Flashcards (00–99)</h1>
+      <div class="status" id="status">Καμία βιβλιοθήκη φορτωμένη ακόμη.</div>
+
+      <div class="grid">
+        <div class="row">
+          <input id="path" type="text" value="LibraryP2 PAO 00-99.json" placeholder="Διαδρομή JSON (σχετική ή απόλυτη URL)" />
+          <button id="btnFetch">Φόρτωσε από διαδρομή</button>
+        </div>
+
+        <div class="row">
+          <input id="file" type="file" accept=".json,application/json" style="display:none" />
+          <label for="file">Επίλεξε αρχείο JSON</label>
+          <small class="muted">Λειτουργεί χωρίς server.</small>
+        </div>
+
+        <div id="cardBox">
+          <div id="front">—</div>
+          <p id="back">—</p>
+        </div>
+
+        <div class="row">
+          <button id="btnShow">Δείξε Απάντηση</button>
+          <button id="btnNext">Επόμενη Κάρτα</button>
+        </div>
+
+        <div class="kvs">
+          <small class="muted">Συντόμευση: <code>Space</code> = Απάντηση / Επόμενη</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /** State **/
+    let pao = {};
+    let keys = [];
+    let currentKey = null;
+    let showingAnswer = false;
+
+    /** Helpers **/
+    function setStatus(msg, isError = false) {
+      const el = document.getElementById("status");
+      el.textContent = msg;
+      el.style.color = isError ? "#ffb3b3" : "#a8f0c6";
+    }
+
+    function normalizeData(data) {
+      // Accept either the full wrapped structure or a direct map of "00".."99"
+      if (data && data["PAO 00-99"] && data["PAO 00-99"]["LibraryP2"]) {
+        return data["PAO 00-99"]["LibraryP2"];
+      }
+      return data;
+    }
+
+    function loadPAOObject(obj) {
+      pao = normalizeData(obj) || {};
+      keys = Object.keys(pao).sort(); // deterministic order, then we randomize selection
+      if (!keys.length) {
+        throw new Error("Το JSON δεν περιέχει στοιχεία PAO.");
+      }
+      setStatus(`Φορτώθηκαν ${keys.length} κάρτες.`);
+      nextCard();
+    }
+
+    function nextCard() {
+      if (!keys.length) {
+        setStatus("Δεν έχει φορτωθεί JSON.", true);
+        return;
+      }
+      showingAnswer = false;
+      currentKey = keys[Math.floor(Math.random() * keys.length)];
+      const entry = pao[currentKey];
+      document.getElementById("front").textContent = `Κωδικός: ${currentKey}${entry?.letters ? " — " + entry.letters : ""}`;
+      document.getElementById("back").style.display = "none";
+      document.getElementById("back").textContent = entry
+        ? `${entry.person} (${entry.occupation})\n${entry.action}\n${entry.object}`
+        : "—";
+    }
+
+    function showAnswer() {
+      if (!keys.length) return;
+      const back = document.getElementById("back");
+      back.style.display = "block";
+      showingAnswer = true;
+    }
+
+    /** Fetch by path/URL **/
+    async function fetchByPath(path) {
+      try {
+        setStatus("Φόρτωση…");
+        // Encode only the path part; if it's an absolute URL we keep it as is
+        const isAbsolute = /^https?:\/\//i.test(path);
+        const url = isAbsolute ? path : encodeURI(path);
+        const res = await fetch(url, { cache: "no-cache" });
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        const data = await res.json();
+        loadPAOObject(data);
+      } catch (err) {
+        console.error(err);
+        setStatus(`Αποτυχία φόρτωσης: ${err.message}. Αν άνοιξες το αρχείο απευθείας (file://), χρειάζεται τοπικός server ή φόρτωσε με "Επίλεξε αρχείο JSON".`, true);
+      }
+    }
+
+    /** Load via File Picker (no server needed) **/
+    function loadFromFile(file) {
+      setStatus("Φόρτωση από αρχείο…");
+      const reader = new FileReader();
+      reader.onerror = () => setStatus("Σφάλμα ανάγνωσης αρχείου.", true);
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          loadPAOObject(data);
+        } catch (e) {
+          console.error(e);
+          setStatus("Μη έγκυρο JSON.", true);
+        }
+      };
+      reader.readAsText(file, "utf-8");
+    }
+
+    /** Events **/
+    document.getElementById("btnFetch").addEventListener("click", () => {
+      const path = document.getElementById("path").value.trim();
+      if (!path) return setStatus("Δώσε διαδρομή JSON.", true);
+      fetchByPath(path);
+    });
+
+    document.getElementById("file").addEventListener("change", (e) => {
+      const file = e.target.files?.[0];
+      if (file) loadFromFile(file);
+    });
+
+    document.getElementById("btnNext").addEventListener("click", () => {
+      if (showingAnswer) {
+        nextCard();
+      } else {
+        showAnswer();
+      }
+    });
+
+    document.getElementById("btnShow").addEventListener("click", () => {
+      showAnswer();
+    });
+
+    // Spacebar toggles show/next
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        if (showingAnswer) nextCard(); else showAnswer();
+      }
+    });
+
+    // Try auto-fetch on load using the default path (works only when served via http(s))
+    window.addEventListener("DOMContentLoaded", () => {
+      const defaultPath = document.getElementById("path").value.trim();
+      // Only auto-fetch when running on http(s) to avoid CORS/file:// issues
+      if (location.protocol.startsWith("http")) {
+        fetchByPath(defaultPath);
+      } else {
+        setStatus("Άνοιξες το αρχείο τοπικά (file://). Χρησιμοποίησε «Επίλεξε αρχείο JSON» ή στήσε τοπικό server.", true);
+      }
+    });
+  </script>
+</body>
+</html>
