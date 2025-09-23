@@ -7,7 +7,7 @@
   <style>
     :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
     body { display:flex; min-height:100vh; align-items:center; justify-content:center; background:#0b1020; color:#e8ecf1; padding:24px; }
-    .app { width: min(780px, 100%); }
+    .app { width: min(1100px, 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .card { border: 1px solid #26324d; border-radius: 16px; padding: 24px; background: #121a33; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
     .title { margin:0 0 10px; font-weight:700; letter-spacing:0.2px; }
     .status { font-size: 14px; opacity:0.85; margin-bottom:16px; }
@@ -25,10 +25,54 @@
     .back-section { padding:10px; border-bottom:1px solid #324569; }
     .back-section:last-child { border-bottom:none; }
     #back-right { font-style:italic; }
+
+    /* Μόνιμη κάρτα κωδικοποίησης */
+    #codingBox {
+      background: #10182c;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+#codingBox {
+  background: linear-gradient(145deg, #10182c, #182444);
+  padding: 20px;
+}
+
+#codingTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+#codingTable th, #codingTable td {
+  border: 1px solid #324569;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+#codingTable th {
+  background: #223166;
+  font-weight: 700;
+  color: #e8ecf1;
+}
+
+#codingTable tr:nth-child(even) {
+  background: #1a2540;
+}
+
+#codingTable tr:nth-child(odd) {
+  background: #121a33;
+}
+
+#codingTable td {
+  color: #cfd8f3;
+}
+
   </style>
 </head>
 <body>
   <div class="app">
+    <!-- Κάρτες PAO -->
     <div class="card">
       <h1 class="title">Flashcards (Libraries v3.2)</h1>
       <div class="status" id="status">Καμία βιβλιοθήκη φορτωμένη ακόμη.</div>
@@ -75,6 +119,39 @@
           <small class="muted">Συντόμευση: <code>Space</code> = Απάντηση / Επόμενη</small>
         </div>
       </div>
+    </div>
+
+    <!-- Μόνιμη κάρτα κωδικοποίησης -->
+    <div id="codingBox" class="card">
+      <h2 class="title">Κωδικοποίηση 0–9</h2>
+      
+    <!-- Μόνιμη κάρτα κωδικοποίησης -->
+    <div id="codingBox" class="card">
+      <h2 class="title">Κωδικοποίηση 0–9</h2>
+      <table id="codingTable">
+        <thead>
+          <tr>
+            <th>Αριθμός</th>
+            <th>P <br>(Dominic)</th>
+            <th>A <br>(Major)</th>
+            <th>O <br>(Shape)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>O / Ο</td><td>S,Z / Σ,Ζ</td><td>Ντόνατ – Donut</td></tr>
+          <tr><td>1</td><td>A / Α</td><td>T,D / Τ,Ντ</td><td>Κερί – Candle</td></tr>
+          <tr><td>2</td><td>B / Β</td><td>N / Ν</td><td>Κύκνος – Swan</td></tr>
+          <tr><td>3</td><td>C / Κ</td><td>M / Μ</td><td>Χειροπέδες – Handcuffs</td></tr>
+          <tr><td>4</td><td>D / Δ</td><td>R / Ρ</td><td>Καρέκλα – Chair</td></tr>
+          <tr><td>5</td><td>E / Ε</td><td>L / Λ</td><td>Γάντζος – Hook</td></tr>
+          <tr><td>6</td><td>S / Σ</td><td>J,Sh,Ch / Τζ,Σ,Τσ</td><td>Κεράσι – Cherry</td></tr>
+          <tr><td>7</td><td>G / Γ</td><td>K,G / Κ,Γκ</td><td>Δρεπάνι – Sickle</td></tr>
+          <tr><td>8</td><td>H / Η</td><td>F,V / Φ,Β</td><td>Γυαλιά – Glasses</td></tr>
+          <tr><td>9</td><td>N / Ν</td><td>P,B / Π,Μπ</td><td>Μπαλόνι – Balloon</td></tr>
+        </tbody>
+      </table>
+    </div>
+
     </div>
   </div>
 
@@ -132,11 +209,11 @@
 
         const left = `${entry.person}\n${entry.action}\n${entry.object}`;
         const patterns = [
-          `Ο ${entry.person} ${entry.action} το ${entry.object} δίπλα από τη ${loci}.`,
-          `Ο ${entry.person} ${entry.action} το ${entry.object} μέσα στη ${loci}.`,
-          `Ο ${entry.person} ${entry.action} το ${entry.object} κάτω από τη σκιά της ${loci}.`,
-          `Ο ${entry.person} ${entry.action} το ${entry.object} καθισμένος στη ${loci}.`,
-          `Ο ${entry.person} ${entry.action} το ${entry.object} έχοντας φόντο τη ${loci}.`
+          `Ο ${entry.person} ${entry.action} το (ένα/μία) ${entry.object} δίπλα από τη(ν)/το(ν) ${loci}.`,
+          `Ο ${entry.person} ${entry.action} το (ένα/μία) ${entry.object} μέσα στη(ν)/στο(ν) ${loci}.`,
+          `Ο ${entry.person} ${entry.action} το (ένα/μία) ${entry.object} κάτω από τη σκιά της/του ${loci}.`,
+          `Ο ${entry.person} ${entry.action} το (ένα/μία) ${entry.object} καθισμένος στη(ν)/στο(ν) ${loci}.`,
+          `Ο ${entry.person} ${entry.action} το (ένα/μία) ${entry.object} έχοντας φόντο τη(ν)/το(ν) ${loci}.`
         ];
         const right = patterns[Math.floor(Math.random() * patterns.length)];
 
@@ -239,7 +316,11 @@
       else setStatus("Δεν βρέθηκε η βιβλιοθήκη.", true);
     });
 
-    window.addEventListener("DOMContentLoaded", autoFetch);
-  </script>
+    window.addEventListener("DOMContentLoaded", () => {
+      autoFetch();
+      document.getElementById("codingTable").textContent = codingTableText;
+    });
+
+    </script>
 </body>
 </html>
