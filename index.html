@@ -5,85 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Flashcards (Libraries v3.2)</title>
   <style>
-    :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    body { display:flex; min-height:100vh; align-items:center; justify-content:center; background:#0b1020; color:#e8ecf1; padding:24px; }
-    .app { width: min(1100px, 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .card { border: 1px solid #26324d; border-radius: 16px; padding: 24px; background: #121a33; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-    .title { margin:0 0 10px; font-weight:700; letter-spacing:0.2px; }
+    body {
+      background:#0b1020;
+      color:#e8ecf1;
+      font-family: Arial, sans-serif;
+      margin:0;
+      padding:20px;
+    }
+    .app {
+      width: min(1400px, 100%);
+      margin:auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      border: 1px solid #26324d;
+      border-radius: 16px;
+      padding: 20px;
+      background: #121a33;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .title { margin:0 0 10px; font-weight:700; }
     .status { font-size: 14px; opacity:0.85; margin-bottom:16px; }
-    .grid { display:grid; grid-template-columns: 1fr; gap: 12px; }
+    .grid { display:grid; gap:12px; }
     #cardBox { border: 1px dashed #324569; border-radius: 12px; padding: 24px; text-align:center; }
     #front { font-size: 28px; margin: 0 0 12px; }
-    #back  { font-size: 20px; margin: 0; display:none; white-space:pre-line; text-align:left; }
-    .row { display:flex; flex-wrap:wrap; gap: 10px; align-items:center; }
-    button, label[for="file"] { cursor:pointer; border: 1px solid #2c3f66; background: #1a2750; color:#e8ecf1; padding:10px 14px; border-radius: 10px; font-size: 15px; }
-    button:hover, label[for="file"]:hover { background:#223166; }
-    select { background:#0f1732; color:#e8ecf1; border:1px solid #26324d; border-radius:10px; padding:10px 12px; }
-    small.muted { color:#a8b6d9; opacity:0.8; }
-    .kvs { font-size:14px; margin-top:8px; }
-    .kvs code { background:#0f1732; padding:2px 6px; border-radius:6px; border:1px solid #26324d; }
-    .back-section { padding:10px; border-bottom:1px solid #324569; }
-    .back-section:last-child { border-bottom:none; }
-    #back-right { font-style:italic; }
-
-    /* Μόνιμη κάρτα κωδικοποίησης */
-    #codingBox {
-      background: #10182c;
-      font-size: 14px;
-      white-space: pre-line;
+    #back  { font-size: 20px; display:none; white-space:pre-line; text-align:left; }
+    .libraries-group { display:flex; flex-direction:column; gap:15px; }
+    .library { background:#121a33; border:1px solid #26324d; border-radius:10px; padding:12px 16px; box-shadow:0 4px 12px rgba(0,0,0,0.3); }
+    .library span { display:block; font-weight:600; color:#a8c3ff; margin-bottom:8px; }
+    .lib-btn { background:#1a2750; border:1px solid #2c3f66; color:#e8ecf1; padding:6px 12px; border-radius:8px; font-size:14px; margin:3px; cursor:pointer; transition:background 0.2s, transform 0.15s; }
+    .lib-btn:hover { background:#223166; transform:translateY(-2px); }
+    #libraryText {
+      background:#10182c;
+      color:#e8ecf1;
+      border:1px solid #26324d;
+      border-radius:12px;
+      padding:12px;
+      font-family: monospace;
+      white-space: pre;
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+      width:100%;
+      height:100%;
     }
-
-#codingBox {
-  background: linear-gradient(145deg, #10182c, #182444);
-  padding: 20px;
-}
-
-#codingTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 16px;
-}
-
-#codingTable th, #codingTable td {
-  border: 1px solid #324569;
-  padding: 10px 14px;
-  text-align: center;
-}
-
-#codingTable th {
-  background: #223166;
-  font-weight: 700;
-  color: #e8ecf1;
-}
-
-#codingTable tr:nth-child(even) {
-  background: #1a2540;
-}
-
-#codingTable tr:nth-child(odd) {
-  background: #121a33;
-}
-
-#codingTable td {
-  color: #cfd8f3;
-}
-
+    #codingBox {
+      grid-column: 1 / span 3;
+      background: linear-gradient(145deg, #10182c, #182444);
+      padding:20px;
+    }
+    #codingTable { width:100%; border-collapse:collapse; font-size:16px; }
+    #codingTable th, #codingTable td { border:1px solid #324569; padding:10px 14px; text-align:center; }
+    #codingTable th { background:#223166; font-weight:700; color:#e8ecf1; }
+    #codingTable tr:nth-child(even) { background:#1a2540; }
+    #codingTable tr:nth-child(odd) { background:#121a33; }
+    #codingTable td { color:#cfd8f3; }
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- Κάρτες PAO -->
+    
+	<!-- Στήλη 1: Flashcards -->
     <div class="card">
       <h1 class="title">Flashcards (Libraries v3.2)</h1>
       <div class="status" id="status">Καμία βιβλιοθήκη φορτωμένη ακόμη.</div>
-
       <div class="grid">
         <div class="row">
           <input id="file" type="file" accept=".json,application/json" style="display:none" />
           <label for="file">Επίλεξε αρχείο JSON</label>
-          <small class="muted">Αν δεν φορτώσει αυτόματα.</small>
         </div>
-
         <div class="row">
           <label for="librarySelect">Βιβλιοθήκη:</label>
           <select id="librarySelect">
@@ -92,236 +82,273 @@
             <option value="PAO 00-99/LibraryP3">PAO 00-99 (P3)</option>
             <option value="PAO 00-99/LibraryP4">PAO 00-99 (P4)</option>
             <option value="PAO 00-99/LibraryP5">PAO 00-99 (P5)</option>
-			<option value="PAO 0-9/LibraryP1">PAO 0-9 (P1)</option>
+            <option value="PAO 0-9/Library_p1">PAO 0-9 (p1)</option>
             <option value="Spatial/LibraryS1">Spatial S1</option>
             <option value="Characters/LibraryC1">Characters C1</option>
             <option value="Characters/LibraryC2">Characters C2</option>
             <option value="Temporal/LibraryT1">Temporal T1</option>
             <option value="Temporal/LibraryT2">Temporal T2</option>
+            <option value="Verses/LibraryV1">Verses V1</option>
           </select>
         </div>
-
         <div id="cardBox">
           <div id="front">—</div>
           <div id="back">
-            <div class="back-section" id="back-code"></div>
-            <div class="back-section" id="back-left"></div>
-            <div class="back-section" id="back-loci"></div>
-            <div class="back-section" id="back-right"></div>
+            <div id="back-code"></div>
+            <div id="back-left"></div>
+            <div id="back-loci"></div>
+            <div id="back-right"></div>
           </div>
         </div>
-
         <div class="row">
           <button id="btnShow">Δείξε Απάντηση</button>
           <button id="btnNext">Επόμενη Κάρτα</button>
         </div>
-
-        <div class="kvs">
-          <small class="muted">Συντόμευση: <code>Space</code> = Απάντηση / Επόμενη</small>
-        </div>
       </div>
     </div>
 
-    <!-- Μόνιμη κάρτα κωδικοποίησης -->
-    <div id="codingBox" class="card">
-      <h2 class="title">Κωδικοποίηση 0–9</h2>
-      
-    <!-- Μόνιμη κάρτα κωδικοποίησης -->
+    <!-- Στήλη 2: Βιβλιοθήκες -->
+    <div class="card">
+      <h2 class="title">Βιβλιοθήκες</h2>
+      <div class="libraries-group">
+        <div class="library"><span>Temporal:</span><button class="lib-btn" data-lib="Temporal/LibraryT1">LibraryT1</button><button class="lib-btn" data-lib="Temporal/LibraryT2">LibraryT2</button></div>
+        <div class="library"><span>Characters:</span><button class="lib-btn" data-lib="Characters/LibraryC1">LibraryC1</button><button class="lib-btn" data-lib="Characters/LibraryC2">LibraryC2</button></div>
+        <div class="library"><span>Spatial:</span><button class="lib-btn" data-lib="Spatial/LibraryS1">LibraryS1</button></div>
+        <div class="library"><span>PAO 0–9:</span><button class="lib-btn" data-lib="PAO 0-9/Library_p1">Library_p1</button></div>
+        <div class="library"><span>PAO 00–99:</span>
+          <button class="lib-btn" data-lib="PAO 00-99/LibraryP1">P1</button>
+          <button class="lib-btn" data-lib="PAO 00-99/LibraryP2">P2</button>
+          <button class="lib-btn" data-lib="PAO 00-99/LibraryP3">P3</button>
+          <button class="lib-btn" data-lib="PAO 00-99/LibraryP4">P4</button>
+          <button class="lib-btn" data-lib="PAO 00-99/LibraryP5">P5</button>
+        </div>
+        <div class="library"><span>Verses:</span><button class="lib-btn" data-lib="Verses/LibraryV1">LibraryV1</button></div>
+      </div>
+    </div>
+
+    <!-- Στήλη 3: Textarea -->
+    <div class="card">
+      <h2 class="title">Περιεχόμενα</h2>
+      <textarea id="libraryText" rows="25"></textarea>
+    </div>
+
+    <!-- Κάτω σειρά: Κωδικοποίηση -->
     <div id="codingBox" class="card">
       <h2 class="title">Κωδικοποίηση 0–9</h2>
       <table id="codingTable">
-        <thead>
-          <tr>
-            <th>Αριθμός</th>
-            <th>P <br>(Dominic)</th>
-            <th>A <br>(Major)</th>
-            <th>O <br>(Shape)</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Αριθμός</th><th>P</th><th>A</th><th>O</th></tr></thead>
         <tbody>
-          <tr><td>0</td><td>O / Ο</td><td>S,Z / Σ,Ζ</td><td>Ντόνατ – Donut</td></tr>
-          <tr><td>1</td><td>A / Α</td><td>T,D / Τ,Ντ</td><td>Κερί – Candle</td></tr>
-          <tr><td>2</td><td>B / Β</td><td>N / Ν</td><td>Κύκνος – Swan</td></tr>
-          <tr><td>3</td><td>C / Κ</td><td>M / Μ</td><td>Χειροπέδες – Handcuffs</td></tr>
-          <tr><td>4</td><td>D / Δ</td><td>R / Ρ</td><td>Καρέκλα – Chair</td></tr>
-          <tr><td>5</td><td>E / Ε</td><td>L / Λ</td><td>Γάντζος – Hook</td></tr>
-          <tr><td>6</td><td>S / Σ</td><td>J,Sh,Ch / Τζ,Σ,Τσ</td><td>Κεράσι – Cherry</td></tr>
-          <tr><td>7</td><td>G / Γ</td><td>K,G / Κ,Γκ</td><td>Δρεπάνι – Sickle</td></tr>
-          <tr><td>8</td><td>H / Η</td><td>F,V / Φ,Β</td><td>Γυαλιά – Glasses</td></tr>
-          <tr><td>9</td><td>N / Ν</td><td>P,B / Π,Μπ</td><td>Μπαλόνι – Balloon</td></tr>
+          <tr><td>0</td><td>O / Ο</td><td>S,Z / Σ,Ζ</td><td>Ντόνατ</td></tr>
+          <tr><td>1</td><td>A / Α</td><td>T,D / Τ,Ντ</td><td>Κερί</td></tr>
+          <tr><td>2</td><td>B / Β</td><td>N / Ν</td><td>Κύκνος</td></tr>
+          <tr><td>3</td><td>C / Κ</td><td>M / Μ</td><td>Χειροπέδες</td></tr>
+          <tr><td>4</td><td>D / Δ</td><td>R / Ρ</td><td>Καρέκλα</td></tr>
+          <tr><td>5</td><td>E / Ε</td><td>L / Λ</td><td>Γάντζος</td></tr>
+          <tr><td>6</td><td>S / Σ</td><td>J,Sh,Ch</td><td>Κεράσι</td></tr>
+          <tr><td>7</td><td>G / Γ</td><td>K,G</td><td>Δρεπάνι</td></tr>
+          <tr><td>8</td><td>H / Η</td><td>F,V</td><td>Γυαλιά</td></tr>
+          <tr><td>9</td><td>N / Ν</td><td>P,B</td><td>Μπαλόνι</td></tr>
         </tbody>
       </table>
     </div>
-
-    </div>
   </div>
 
-  <script>
-    let pao = {};
-    let keys = [];
-    let currentKey = null;
-    let showingAnswer = false;
-    window.lastData = null;
+<script>
+  let pao = {};
+  let keys = [];
+  let currentKey = null;
+  let showingAnswer = false;
+  window.lastData = null;
 
-    function setStatus(msg, isError=false) {
-      const el = document.getElementById("status");
-      el.textContent = msg;
-      el.style.color = isError ? "#ffb3b3" : "#a8f0c6";
+  function setStatus(msg, isError=false) {
+    const el = document.getElementById("status");
+    el.textContent = msg;
+    el.style.color = isError ? "#ffb3b3" : "#a8f0c6";
+  }
+
+ function normalizeData(data) {
+  const path = document.getElementById("librarySelect").value.split("/");
+  let obj = data;
+  for (let key of path) {
+    if (obj && obj[key]) obj = obj[key];
+    else return null;
+  }
+
+  // Ειδική λογική για PAO 0–9
+  if (obj.persons && obj.actions && obj.objects) {
+    const combined = {};
+    for (let i = 0; i <= 9; i++) {
+      combined[i] = {
+        person: obj.persons[i].el || obj.persons[i].en || obj.persons[i],
+        action: obj.actions[i].el || obj.actions[i].en || obj.actions[i],
+        object: obj.objects[i].el || obj.objects[i].en || obj.objects[i]
+      };
+    }
+    return combined;
+  }
+
+  // Λογική PAO 00–99
+  if (obj.Persons && obj.Actions && obj.Objects) {
+    const combined = {};
+    for (let k of Object.keys(obj.Persons)) {
+      combined[k] = {
+        person: obj.Persons[k].el || obj.Persons[k].en || obj.Persons[k],
+        action: obj.Actions[k].el || obj.Actions[k].en || obj.Actions[k],
+        object: obj.Objects[k].el || obj.Objects[k].en || obj.Objects[k]
+      };
+    }
+    return combined;
+  }
+
+  return obj;
+}
+
+  function loadPAOObject(obj) {
+    pao = obj || {};
+    keys = Object.keys(pao).sort();
+    if (!keys.length) throw new Error("Το JSON δεν περιέχει στοιχεία.");
+    setStatus(`Φορτώθηκαν ${keys.length} κάρτες.`);
+    nextCard();
+  }
+
+  function renderEntry(key, entry) {
+    if (!entry) return "—";
+
+    if (entry.person && entry.action && entry.object) {
+      const lociEntries = window.lastData?.Temporal?.LibraryT1 || {};
+      const lociKeys = Object.keys(lociEntries);
+      const randomLoci = lociEntries[lociKeys[Math.floor(Math.random() * lociKeys.length)]];
+      const loci = randomLoci?.el || randomLoci?.en || "";
+
+      const left = `${entry.person}\n${entry.action}\n${entry.object}`;
+      const patterns = [
+        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} δίπλα από τη(ν)/το(ν) ${loci}.`,
+        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} μέσα στη(ν)/στο(ν) ${loci}.`,
+        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} κάτω από τη σκιά της/του ${loci}.`,
+        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} καθισμένος στη(ν)/στο(ν) ${loci}.`,
+        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} έχοντας φόντο τη(ν)/το(ν) ${loci}.`
+      ];
+      const right = patterns[Math.floor(Math.random() * patterns.length)];
+
+      document.getElementById("back-code").textContent = `Κωδικός: ${key}`;
+      document.getElementById("back-left").textContent = left;
+      document.getElementById("back-loci").textContent = loci;
+      document.getElementById("back-right").textContent = right;
+      return "";
     }
 
-    function normalizeData(data) {
-      const path = document.getElementById("librarySelect").value.split("/");
-      let obj = data;
-      for (let key of path) {
-        if (obj && obj[key]) obj = obj[key];
-        else return null;
-      }
+    if (entry.el && entry.en) return `${entry.el}\n${entry.en}`;
+    if (typeof entry === "string") return entry;
+    return JSON.stringify(entry, null, 2);
+  }
 
-      if (obj.Persons && obj.Actions && obj.Objects) {
-        const combined = {};
-        for (let k of Object.keys(obj.Persons)) {
-          combined[k] = {
-            person: obj.Persons[k].el || obj.Persons[k].en || obj.Persons[k],
-            action: obj.Actions[k].el || obj.Actions[k].en || obj.Actions[k],
-            object: obj.Objects[k].el || obj.Objects[k].en || obj.Objects[k]
-          };
-        }
-        return combined;
-      }
-      return obj;
+  function nextCard() {
+    if (!keys.length) {
+      setStatus("Δεν έχει φορτωθεί JSON.", true);
+      return;
     }
-
-    function loadPAOObject(obj) {
-      pao = obj || {};
-      keys = Object.keys(pao).sort();
-      if (!keys.length) throw new Error("Το JSON δεν περιέχει στοιχεία.");
-      setStatus(`Φορτώθηκαν ${keys.length} κάρτες.`);
-      nextCard();
+    showingAnswer = false;
+    currentKey = keys[Math.floor(Math.random() * keys.length)];
+    const entry = pao[currentKey];
+    document.getElementById("front").textContent = `Κωδικός: ${currentKey}`;
+    document.getElementById("back").style.display = "none";
+    const result = renderEntry(currentKey, entry);
+    if (result) {
+      document.getElementById("back-code").textContent = `Κωδικός: ${currentKey}`;
+      document.getElementById("back-left").textContent = result;
+      document.getElementById("back-loci").textContent = "";
+      document.getElementById("back-right").textContent = "";
     }
+  }
 
-    function renderEntry(key, entry) {
-      if (!entry) return "—";
+  function showAnswer() {
+    if (!keys.length) return;
+    document.getElementById("back").style.display = "block";
+    showingAnswer = true;
+  }
 
-      if (entry.person && entry.action && entry.object) {
-        const lociEntries = window.lastData?.Temporal?.LibraryT1 || {};
-        const lociKeys = Object.keys(lociEntries);
-        const randomLoci = lociEntries[lociKeys[Math.floor(Math.random() * lociKeys.length)]];
-        const loci = randomLoci?.el || randomLoci?.en || "";
-
-        const left = `${entry.person}\n${entry.action}\n${entry.object}`;
-        const patterns = [
-          `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} δίπλα από τη(ν)/το(ν) ${loci}.`,
-          `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} μέσα στη(ν)/στο(ν) ${loci}.`,
-          `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} κάτω από τη σκιά της/του ${loci}.`,
-          `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} καθισμένος στη(ν)/στο(ν) ${loci}.`,
-          `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} έχοντας φόντο τη(ν)/το(ν) ${loci}.`
-        ];
-        const right = patterns[Math.floor(Math.random() * patterns.length)];
-
-        document.getElementById("back-code").textContent = `Κωδικός: ${key}`;
-        document.getElementById("back-left").textContent = left;
-        document.getElementById("back-loci").textContent = loci;
-        document.getElementById("back-right").textContent = right;
-        return "";
-      }
-
-      if (entry.el && entry.en) return `${entry.el}\n${entry.en}`;
-      if (typeof entry === "string") return entry;
-      return JSON.stringify(entry, null, 2);
+  async function autoFetch() {
+    try {
+      setStatus("Αυτόματη φόρτωση…");
+      const res = await fetch("libraries_v3.2.json?ts=" + Date.now(), { cache:"no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+      const data = await res.json();
+      window.lastData = data;
+      const normalized = normalizeData(data);
+      loadPAOObject(normalized);
+    } catch (err) {
+      console.warn("Αποτυχία αυτόματης φόρτωσης:", err.message);
+      setStatus("Δεν βρέθηκε libraries_v3.2.json. Επίλεξε αρχείο JSON.", true);
     }
+  }
 
-    function nextCard() {
-      if (!keys.length) {
-        setStatus("Δεν έχει φορτωθεί JSON.", true);
-        return;
-      }
-      showingAnswer = false;
-      currentKey = keys[Math.floor(Math.random() * keys.length)];
-      const entry = pao[currentKey];
-      document.getElementById("front").textContent = `Κωδικός: ${currentKey}`;
-      document.getElementById("back").style.display = "none";
-      const result = renderEntry(currentKey, entry);
-      if (result) {
-        document.getElementById("back-code").textContent = `Κωδικός: ${currentKey}`;
-        document.getElementById("back-left").textContent = result;
-        document.getElementById("back-loci").textContent = "";
-        document.getElementById("back-right").textContent = "";
-      }
-    }
-
-    function showAnswer() {
-      if (!keys.length) return;
-      const back = document.getElementById("back");
-      back.style.display = "block";
-      showingAnswer = true;
-    }
-
-    async function autoFetch() {
+  function loadFromFile(file) {
+    setStatus("Φόρτωση από αρχείο…");
+    const reader = new FileReader();
+    reader.onerror = () => setStatus("Σφάλμα ανάγνωσης αρχείου.", true);
+    reader.onload = () => {
       try {
-        setStatus("Αυτόματη φόρτωση…");
-        const res = await fetch("libraries_v3.2.json?ts=" + Date.now(), { cache:"no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-        const data = await res.json();
+        const data = JSON.parse(reader.result);
         window.lastData = data;
         const normalized = normalizeData(data);
         loadPAOObject(normalized);
-      } catch (err) {
-        console.warn("Αποτυχία αυτόματης φόρτωσης:", err.message);
-        setStatus("Δεν βρέθηκε libraries_v3.2.json. Επίλεξε αρχείο JSON.", true);
+      } catch (e) {
+        console.error(e);
+        setStatus("Μη έγκυρο JSON.", true);
       }
-    }
+    };
+    reader.readAsText(file, "utf-8");
+  }
 
-    function loadFromFile(file) {
-      setStatus("Φόρτωση από αρχείο…");
-      const reader = new FileReader();
-      reader.onerror = () => setStatus("Σφάλμα ανάγνωσης αρχείου.", true);
-      reader.onload = () => {
-        try {
-          const data = JSON.parse(reader.result);
-          window.lastData = data;
-          const normalized = normalizeData(data);
-          loadPAOObject(normalized);
-        } catch (e) {
-          console.error(e);
-          setStatus("Μη έγκυρο JSON.", true);
-        }
-      };
-      reader.readAsText(file, "utf-8");
-    }
+  document.getElementById("file").addEventListener("change", e => {
+    const file = e.target.files?.[0];
+    if (file) loadFromFile(file);
+  });
 
-    document.getElementById("file").addEventListener("change", e => {
-      const file = e.target.files?.[0];
-      if (file) loadFromFile(file);
-    });
+  document.getElementById("btnNext").addEventListener("click", () => {
+    if (showingAnswer) nextCard(); else showAnswer();
+  });
 
-    document.getElementById("btnNext").addEventListener("click", () => {
+  document.getElementById("btnShow").addEventListener("click", () => showAnswer());
+
+  window.addEventListener("keydown", e => {
+    if (e.code === "Space") {
+      e.preventDefault();
       if (showingAnswer) nextCard(); else showAnswer();
-    });
+    }
+  });
 
-    document.getElementById("btnShow").addEventListener("click", () => showAnswer());
+  document.getElementById("librarySelect").addEventListener("change", () => {
+    if (!window.lastData) {
+      setStatus("Δεν έχει φορτωθεί ακόμη JSON.", true);
+      return;
+    }
+    const normalized = normalizeData(window.lastData);
+    if (normalized) loadPAOObject(normalized);
+    else setStatus("Δεν βρέθηκε η βιβλιοθήκη.", true);
+  });
 
-    window.addEventListener("keydown", e => {
-      if (e.code === "Space") {
-        e.preventDefault();
-        if (showingAnswer) nextCard(); else showAnswer();
-      }
-    });
-
-    document.getElementById("librarySelect").addEventListener("change", () => {
+  // δεξί πάνελ (buttons)
+  document.querySelectorAll(".lib-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
       if (!window.lastData) {
-        setStatus("Δεν έχει φορτωθεί ακόμη JSON.", true);
+        document.getElementById("libraryText").value = "Δεν έχει φορτωθεί JSON.";
         return;
       }
-      const normalized = normalizeData(window.lastData);
-      if (normalized) loadPAOObject(normalized);
-      else setStatus("Δεν βρέθηκε η βιβλιοθήκη.", true);
+      const path = btn.dataset.lib.split("/");
+      let obj = window.lastData;
+      for (let key of path) {
+        if (obj && obj[key]) obj = obj[key];
+        else obj = null;
+      }
+      document.getElementById("libraryText").value =
+        obj ? JSON.stringify(obj, null, 2) : "Δεν βρέθηκαν δεδομένα.";
     });
+  });
 
-    window.addEventListener("DOMContentLoaded", () => {
-      autoFetch();
-      document.getElementById("codingTable").textContent = codingTableText;
-    });
-
-    </script>
+  window.addEventListener("DOMContentLoaded", () => {
+    autoFetch();
+  });
+</script>
 </body>
 </html>
