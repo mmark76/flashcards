@@ -205,7 +205,7 @@
 
   function loadPAOObject(obj) {
     pao = obj || {};
-    keys = Object.keys(pao).sort();
+    keys = Object.keys(pao).sort((a, b) => Number(a) - Number(b));
     if (!keys.length) throw new Error("Το JSON δεν περιέχει στοιχεία.");
     setStatus(`Φορτώθηκαν ${keys.length} κάρτες.`);
     nextCard();
@@ -352,3 +352,4 @@
 </script>
 </body>
 </html>
+
