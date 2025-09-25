@@ -75,8 +75,11 @@
           <label for="file">Επίλεξε αρχείο JSON</label>
         </div>
         <div class="row">
-          <label for="librarySelect">Βιβλιοθήκη:</label>
-          <select id="librarySelect">
+	   <label for="librarySelect">Βιβλιοθήκη:</label>
+          <select id="librarySelect"           
+		  style="background:#1a2750; border:1px solid #2c3f66; color:#e8ecf1;
+           padding:6px 12px; border-radius:8px; font-size:14px; margin:3px;
+           cursor:pointer; transition:background 0.2s, transform 0.15s;">>
             <option value="PAO 00-99/LibraryP1">PAO 00-99 (P1)</option>
             <option value="PAO 00-99/LibraryP2">PAO 00-99 (P2)</option>
             <option value="PAO 00-99/LibraryP3">PAO 00-99 (P3)</option>
@@ -100,10 +103,31 @@
             <div id="back-right"></div>
           </div>
         </div>
-        <div class="row">
-          <button id="btnShow">Δείξε Απάντηση</button>
-          <button id="btnNext">Επόμενη Κάρτα</button>
-        </div>
+		
+<div class="row">
+  <button id="btnShow" 
+    style="background:#1a2750; border:1px solid #2c3f66; color:#e8ecf1;
+           padding:6px 12px; border-radius:8px; font-size:14px; margin:3px;
+           cursor:pointer; transition:background 0.2s, transform 0.15s;">
+    Δείξε Απάντηση
+  </button>
+
+  <button id="btnNext" 
+    style="background:#1a2750; border:1px solid #2c3f66; color:#e8ecf1;
+           padding:6px 12px; border-radius:8px; font-size:14px; margin:3px;
+           cursor:pointer; transition:background 0.2s, transform 0.15s;">
+    Επόμενη Κάρτα
+  </button>
+      
+ <button disabled
+    style="background:#1a2750; border:1px solid #2c3f66; color:#e8ecf1;
+           padding:6px 12px; border-radius:8px; font-size:14px; margin:3px;
+           cursor:pointer; transition:background 0.2s, transform 0.15s;">
+    ... or press Space
+  </button>
+  
+</div>
+
       </div>
     </div>
 
