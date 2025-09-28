@@ -245,11 +245,11 @@
 
       const left = `${entry.person}\n${entry.action}\n${entry.object}`;
       const patterns = [
-        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} δίπλα από τη(ν)/το(ν) ${loci}.`,
-        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} μέσα στη(ν)/στο(ν) ${loci}.`,
-        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} κάτω από τη σκιά της/του ${loci}.`,
-        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} καθισμένος στη(ν)/στο(ν) ${loci}.`,
-        `Ο ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} έχοντας φόντο τη(ν)/το(ν) ${loci}.`
+        `ΠΡΟΤΑΣΗ: Ο/H/TO ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} δίπλα από τη(ν)/το(ν) ${loci}.`,
+        `ΠΡΟΤΑΣΗ: Ο/H/TO ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} μέσα στη(ν)/στο(ν) ${loci}.`,
+        `ΠΡΟΤΑΣΗ: Ο/H/TO ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} κάτω από τη σκιά της/του ${loci}.`,
+        `ΠΡΟΤΑΣΗ: Ο/H/TO ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} καθισμένος στη(ν)/στο(ν) ${loci}.`,
+        `ΠΡΟΤΑΣΗ: Ο/H/TO ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} έχοντας φόντο τη(ν)/το(ν) ${loci}.`
       ];
       const right = patterns[Math.floor(Math.random() * patterns.length)];
 
@@ -375,6 +375,7 @@
 </script>
 </body>
 </html>
+
 
 
 
