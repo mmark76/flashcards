@@ -241,7 +241,9 @@
       const lociEntries = window.lastData?.Temporal?.LibraryT1 || {};
       const lociKeys = Object.keys(lociEntries);
       const randomLoci = lociEntries[lociKeys[Math.floor(Math.random() * lociKeys.length)]];
-      const loci = randomLoci?.el || randomLoci?.en || "";
+      const lociValue = randomLoci?.el || randomLoci?.en || "";
+      const loci = "Locus: " + lociValue;
+
 
       const left = `${entry.person}\n${entry.action}\n${entry.object}`;
       const patterns = [
@@ -375,6 +377,7 @@
 </script>
 </body>
 </html>
+
 
 
 
