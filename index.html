@@ -197,31 +197,31 @@
     else return null;
   }
 
-  // Ειδική λογική για PAO 0–9
-  if (obj.persons && obj.actions && obj.objects) {
-    const combined = {};
-    for (let i = 0; i <= 9; i++) {
-      combined[i] = {
-      person: Person:  + (obj.persons[i].el || obj.persons[i].en || obj.persons[i]),
-      action: Action:  + (obj.actions[i].el || obj.actions[i].en || obj.actions[i]),
-      object: Object:  + (obj.objects[i].el || obj.objects[i].en || obj.objects[i])
-      };
-    }
-    return combined;
+// PAO 0–9
+if (obj.persons && obj.actions && obj.objects) {
+  const combined = {};
+  for (let i = 0; i <= 9; i++) {
+    combined[i] = {
+      person: obj.persons[i].el || obj.persons[i].en || obj.persons[i],
+      action: obj.actions[i].el || obj.actions[i].en || obj.actions[i],
+      object: obj.objects[i].el || obj.objects[i].en || obj.objects[i]
+    };
   }
+  return combined;
+}
 
-  // Λογική PAO 00–99
-  if (obj.Persons && obj.Actions && obj.Objects) {
-    const combined = {};
-    for (let k of Object.keys(obj.Persons)) {
-      combined[k] = {
-      person: Person:  + (obj.Persons[k].el || obj.Persons[k].en || obj.Persons[k]),
-      action: Action:  + (obj.Actions[k].el || obj.Actions[k].en || obj.Actions[k]),
-      object: Object:  + (obj.Objects[k].el || obj.Objects[k].en || obj.Objects[k])
-      };
-    }
-    return combined;
+// PAO 00–99
+if (obj.Persons && obj.Actions && obj.Objects) {
+  const combined = {};
+  for (let k of Object.keys(obj.Persons)) {
+    combined[k] = {
+      person: obj.Persons[k].el || obj.Persons[k].en || obj.Persons[k],
+      action: obj.Actions[k].el || obj.Actions[k].en || obj.Actions[k],
+      object: obj.Objects[k].el || obj.Objects[k].en || obj.Objects[k]
+    };
   }
+  return combined;
+}
 
   return obj;
 }
@@ -243,9 +243,7 @@
       const randomLoci = lociEntries[lociKeys[Math.floor(Math.random() * lociKeys.length)]];
       const lociValue = randomLoci?.el || randomLoci?.en || "";
       const loci = "Random Locus: " + lociValue;
-
-
-      const left = `${entry.person}\n${entry.action}\n${entry.object}`;
+      const left = `Person: ${entry.person}\nAction: ${entry.action}\nObject: ${entry.object}`;
       const patterns = [
         `Πρόταση:Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} δίπλα από τη(ν)/το(ν) ${loci}.`,
         `Πρόταση:Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} μέσα στη(ν)/στο(ν) ${loci}.`,
@@ -377,6 +375,7 @@
 </script>
 </body>
 </html>
+
 
 
 
