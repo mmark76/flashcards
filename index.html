@@ -242,7 +242,7 @@
       const lociKeys = Object.keys(lociEntries);
       const randomLoci = lociEntries[lociKeys[Math.floor(Math.random() * lociKeys.length)]];
       const lociValue = randomLoci?.el || randomLoci?.en || "";
-      const loci = "Locus: " + lociValue;
+      const loci = "Random Locus: " + lociValue;
 
 
       const left = `${entry.person}\n${entry.action}\n${entry.object}`;
@@ -377,6 +377,7 @@
 </script>
 </body>
 </html>
+
 
 
 
