@@ -202,9 +202,9 @@
     const combined = {};
     for (let i = 0; i <= 9; i++) {
       combined[i] = {
-      person: P: + (obj.persons[i].el || obj.persons[i].en || obj.persons[i]),
-      action: A: + (obj.actions[i].el || obj.actions[i].en || obj.actions[i]),
-      object: O: + (obj.objects[i].el || obj.objects[i].en || obj.objects[i])
+      person: Person:  + (obj.persons[i].el || obj.persons[i].en || obj.persons[i]),
+      action: Action:  + (obj.actions[i].el || obj.actions[i].en || obj.actions[i]),
+      object: Object:  + (obj.objects[i].el || obj.objects[i].en || obj.objects[i])
       };
     }
     return combined;
@@ -215,9 +215,9 @@
     const combined = {};
     for (let k of Object.keys(obj.Persons)) {
       combined[k] = {
-      person: "P: " + (obj.Persons[k].el || obj.Persons[k].en || obj.Persons[k]),
-      action: "A: " + (obj.Actions[k].el || obj.Actions[k].en || obj.Actions[k]),
-      object: "O: " + (obj.Objects[k].el || obj.Objects[k].en || obj.Objects[k])
+      person: Person:  + (obj.Persons[k].el || obj.Persons[k].en || obj.Persons[k]),
+      action: Action:  + (obj.Actions[k].el || obj.Actions[k].en || obj.Actions[k]),
+      object: Object:  + (obj.Objects[k].el || obj.Objects[k].en || obj.Objects[k])
       };
     }
     return combined;
@@ -377,6 +377,7 @@
 </script>
 </body>
 </html>
+
 
 
 
