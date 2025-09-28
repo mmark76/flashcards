@@ -245,11 +245,11 @@ if (obj.Persons && obj.Actions && obj.Objects) {
       const loci = "Random Locus: " + lociValue;
       const left = `Person: ${entry.person}\nAction: ${entry.action}\nObject: ${entry.object}`;
       const patterns = [
-        `Πρόταση:Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} δίπλα από τη(ν)/το(ν) ${loci}.`,
-        `Πρόταση:Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} μέσα στη(ν)/στο(ν) ${loci}.`,
-        `Πρόταση:Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} κάτω από τη σκιά της/του ${loci}.`,
-        `Πρόταση:Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} καθισμένος στη(ν)/στο(ν) ${loci}.`,
-        `Πρόταση:Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} έχοντας φόντο τη(ν)/το(ν) ${loci}.`
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} δίπλα από τη(ν)/το(ν) ${loci}.`,
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} μέσα στη(ν)/στο(ν) ${loci}.`,
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} κάτω από τη σκιά της/του ${loci}.`,
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} καθισμένος στη(ν)/στο(ν) ${loci}.`,
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} έχοντας φόντο τη(ν)/το(ν) ${loci}.`
       ];
       const right = patterns[Math.floor(Math.random() * patterns.length)];
 
@@ -375,6 +375,7 @@ if (obj.Persons && obj.Actions && obj.Objects) {
 </script>
 </body>
 </html>
+
 
 
 
