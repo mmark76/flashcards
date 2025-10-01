@@ -251,13 +251,17 @@ if (obj.Persons && obj.Actions && obj.Objects) {
       const loci = "Random Locus: " + lociValue;
       const left = `Person: ${entry.person}\nAction: ${entry.action}\nObject: ${entry.object}`;
       const patterns = [
-        `Παράδειγμα: ${entry.person} ${entry.action} ${entry.object} ${loci}`
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} δίπλα από τη(ν)/το(ν) ${loci}.`,
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} μέσα στη(ν)/στο(ν) ${loci}.`,
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} κάτω από τη σκιά της/του ${loci}.`,
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} καθισμένος στη(ν)/στο(ν) ${loci}.`,
+        `Παράδειγμα πρότασης:  Ο/Η ${entry.person} ${entry.action} (το/ένα/μία) ${entry.object} έχοντας φόντο τη(ν)/το(ν) ${loci}.`
       ];
       const right = patterns[Math.floor(Math.random() * patterns.length)];
 
       document.getElementById("back-code").textContent = `Κωδικός: ${key}`;
       document.getElementById("back-left").textContent = left;
-      document.getElementById("back-").textContent = ;
+      document.getElementById("back-loci").textContent = loci;
       document.getElementById("back-right").textContent = right;
       return "";
     }
@@ -377,9 +381,6 @@ if (obj.Persons && obj.Actions && obj.Objects) {
 </script>
 </body>
 </html>
-
-
-
 
 
 
