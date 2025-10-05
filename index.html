@@ -250,13 +250,7 @@ if (obj.Persons && obj.Actions && obj.Objects) {
       const lociValue = randomLoci?.el || randomLoci?.en || "";
       const loci = "Random Locus: " + lociValue;
       const left = `Person: ${entry.person}\nAction: ${entry.action}\nObject: ${entry.object}`;
-      const patterns = [
-        `Παράδειγμα: ${entry.person} ${entry.action} ${entry.object} ${loci}.`,
-        `Παράδειγμα: ${entry.person} ${entry.action} ${entry.object} ${loci}.`,
-        `Παράδειγμα: ${entry.person} ${entry.action} ${entry.object} ${loci}.`,
-        `Παράδειγμα: ${entry.person} ${entry.action} ${entry.object} ${loci}.`,
-        `Παράδειγμα: ${entry.person} ${entry.action} ${entry.object} ${loci}.`
-      ];
+      const patterns = [ ];
       const right = patterns[Math.floor(Math.random() * patterns.length)];
 
       document.getElementById("back-code").textContent = `Κωδικός: ${key}`;
@@ -381,6 +375,7 @@ if (obj.Persons && obj.Actions && obj.Objects) {
 </script>
 </body>
 </html>
+
 
 
 
