@@ -294,7 +294,7 @@ if (obj.Persons && obj.Actions && obj.Objects) {
   async function autoFetch() {
     try {
       setStatus("Αυτόματη φόρτωση…");
-      const res = await fetch("libraries.json?ts=" + Date.now(), { cache:"no-store" });
+      const res = await fetch("libraries_v.5.3.json?ts=" + Date.now(), { cache:"no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
       const data = await res.json();
       window.lastData = data;
@@ -376,6 +376,7 @@ if (obj.Persons && obj.Actions && obj.Objects) {
 </script>
 </body>
 </html>
+
 
 
 
